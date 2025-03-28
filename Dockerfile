@@ -1,10 +1,21 @@
-FROM ubuntu:latest
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
 
-RUN apt-get update && apt-get install -y python3-yaml
+# Set the working directory in the container
+WORKDIR /app
 
+# Install Python and pip
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip
+
+# Install PyYAML
 RUN pip3 install PyYAML
 
-COPY feed.py /usr/bin/feed.py
-COPY entrypoint.sh /entrypoint.sh
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Make feed.py executable
+RUN chmod +x /usr/bin/feed.py
+
+# Run feed.py when the container launches
+CMD ["python3", "/usr/bin/feed.py"]
