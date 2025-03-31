@@ -1,5 +1,3 @@
-
-
 FROM ubuntu:latest
 
 # Update apt-get and install necessary packages
